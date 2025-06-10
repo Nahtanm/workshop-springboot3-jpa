@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ncscode.course.entities.User;
-import com.ncscode.course.services.UserService;
+import com.ncscode.course.entities.Order;
+import com.ncscode.course.services.OrderServices;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserResources {
+@RequestMapping(value = "/orders")
+public class OrderResources {
 
 	@Autowired
-	private UserService userService;
+	private OrderServices orderServices;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll() {
-		return ResponseEntity.ok().body(userService.findAll());
+	public ResponseEntity<List<Order>> findAll(){
+		return ResponseEntity.ok().body(orderServices.findAll());
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable Integer id){
-		return ResponseEntity.ok().body(userService.findById(id));
+	public ResponseEntity<Order> findById(@PathVariable Integer id){
+		return ResponseEntity.ok().body(orderServices.findById(id));
 	}
-
+	
 }
