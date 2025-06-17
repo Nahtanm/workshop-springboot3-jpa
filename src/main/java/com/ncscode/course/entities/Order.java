@@ -2,7 +2,9 @@ package com.ncscode.course.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ncscode.course.entities.enums.OrderStatus;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,6 +35,9 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
+
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
 
 	public Order(Integer id, Instant moment, OrderStatus orderStatus, User client) {
 		this.id = id;
@@ -59,16 +65,20 @@ public class Order implements Serializable {
 		this.moment = moment;
 	}
 
+	public Set<OrderItem> getItems() {
+		return items;
+	}
+
 	public OrderStatus getOrderStatus() {
-		return OrderStatus.valueOf(orderStatus) ;
+		return OrderStatus.valueOf(orderStatus);
 	}
 
 	public void setOrderStatus(OrderStatus orderStatus) {
-		
-		if(orderStatus != null) {
-			this.orderStatus = orderStatus.getCode();	
+
+		if (orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
 		}
-		
+
 	}
 
 	public User getClient() {

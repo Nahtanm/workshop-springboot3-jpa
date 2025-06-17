@@ -13,7 +13,7 @@ import com.ncscode.course.entities.Category;
 import com.ncscode.course.services.CategoryServices;
 
 @RestController
-@RequestMapping(value = "/categorys")
+@RequestMapping(value = "/categories")
 public class CategoryResources {
 
 	@Autowired
