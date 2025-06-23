@@ -94,8 +94,12 @@ public class Product implements Serializable {
 	}
 
 	@JsonIgnore
-	public Set<OrderItem> getItems() {
-		return items;
+	public Set<Order> getItems() {
+		Set<Order> set = new HashSet<>();
+		for(OrderItem x : items) {
+			set.add(x.getOrder());
+		}
+		return set;
 	}
 
 	@Override
