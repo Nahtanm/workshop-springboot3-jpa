@@ -3,10 +3,13 @@ package com.ncscode.course.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ncscode.course.entities.User;
 import com.ncscode.course.repositories.UserRepository;
+import com.ncscode.course.services.exceptions.DatabaseExcepiton;
 import com.ncscode.course.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -28,7 +31,13 @@ public class UserService {
 	}
 	
 	public void delete(Integer id) {
-		userRepository.deleteById(id);
+		try {
+			userRepository.deleteById(id);			
+		}catch(EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		}catch(DataIntegrityViolationException e) {
+			throw new DatabaseExcepiton(e.getMessage());
+		}
 	}
 	
 	public User update(Integer id, User user) {
